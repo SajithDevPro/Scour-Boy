@@ -1,0 +1,6 @@
+{
+  "name": "Elite Scout AI",
+  "description": "Professional football player video analysis and tactical coaching powered by Gemini.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
