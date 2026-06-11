@@ -1,204 +1,3 @@
-// import dotenv from "dotenv";
-// dotenv.config();
-
-// console.log("API KEY:", process.env.GEMINI_API_KEY);
-
-// import express from "express";
-// import path from "path";
-// import multer from "multer";
-// import os from "os";
-// import fs from "fs";
-// import { createServer as createViteServer } from "vite";
-// import { GoogleGenAI } from "@google/genai";
-
-// async function startServer() {
-//   const app = express();
-//   const PORT = 3000;
-
-//   const upload = multer({ dest: os.tmpdir() });
-
-//   // Initialize Gemini
-//   let ai: GoogleGenAI | null = null;
-//   try {
-//     if (process.env.GEMINI_API_KEY) {
-//       ai = new GoogleGenAI({
-//         apiKey: process.env.GEMINI_API_KEY,
-//         httpOptions: {
-//           headers: {
-//             'User-Agent': 'aistudio-build',
-//           }
-//         }
-//       });
-//     }
-//   } catch (err) {
-//     console.error("Gemini failed to initialize", err);
-//   }
-
-//   app.use(express.json());
-
-//   app.post("/api/analyze", upload.single("video"), async (req, res) => {
-//     try {
-//       if (!req.file) {
-//         return res.status(400).json({ error: "No video file provided" });
-//       }
-
-//       const file = req.file;
-
-//       if (!ai) {
-//         return res.status(500).json({ error: "Gemini AI not initialized. Check API key." });
-//       }
-
-//       console.log(`Uploading file ${file.path} to Gemini...`);
-//       const uploadResult = await ai.files.upload({
-//         file: file.path,
-//         config: {
-//           mimeType: file.mimetype,
-//         }
-//       });
-//       console.log(`Uploaded as ${uploadResult.name}. Waiting for processing...`);
-
-//       let uploadedFile = await ai.files.get({ name: uploadResult.name });
-//       while (uploadedFile.state === 'PROCESSING') {
-//         console.log(`File state: PROCESSING. Waiting...`);
-//         await new Promise((r) => setTimeout(r, 3000));
-//         uploadedFile = await ai.files.get({ name: uploadResult.name });
-//       }
-//       if (uploadedFile.state === 'FAILED') {
-//         throw new Error('Video processing failed on Gemini server.');
-//       }
-
-//       console.log("File is ready. Generating analysis...");
-
-//       const systemPrompt = `You are an elite world-class AI football performance analyst and tactical coach.
-// Your job is to analyze football player videos with extreme depth, realism, and professional coaching intelligence.
-// You do NOT give generic motivational advice.
-// You analyze the player like a real elite academy scout from clubs like Real Madrid, Barcelona, Manchester City, Bayern Munich, or PSG.
-
-// You must output valid JSON matching the following structure exactly (no markdown formatting outside the JSON, just pure JSON):
-// {
-//   "overallRating": 88,
-//   "archetype": "The Deep-Lying Catalyst",
-//   "position": "CF/F9",
-//   "weakFoot": 4, 
-//   "confidence": 90,
-//   "aggression": 75,
-//   "flair": 85,
-//   "radar": {
-//     "dribbling": 85,
-//     "pace": 80,
-//     "agility": 82,
-//     "tacticalIQ": 92,
-//     "passing": 88,
-//     "finishing": 84,
-//     "composure": 86,
-//     "creativity": 90
-//   },
-//   "threatAnalysis": {
-//     "dangerous": ["Strengths/weapons"],
-//     "exploitable": ["Weaknesses/flaws"]
-//   },
-//   "comparison": {
-//     "player": "Karim Benzema",
-//     "reason": "Matches Benzema's drop-deep efficiency with De Jong's ability to drive through midfields.",
-//     "similarity": 85
-//   },
-//   "footballDNA": ["Fearless Dribbler", "Tactical Controller"],
-//   "evolutionRoadmap": [
-//     { "day": "Day 1-10", "focus": "Reaction Speed", "drill": "High-intensity rondos..." },
-//     { "day": "Day 11-20", "focus": "Lateral Agility", "drill": "Isometric hip stabilizers..." },
-//     { "day": "Day 21-30", "focus": "The False-9 Pivot", "drill": "3-man bounce pass sequence..." }
-//   ],
-//   "scoutVerdict": "Cinematic summary...",
-//   "weakFootDevelopment": 45,
-//   "milestones": ["Milestone 1", "Milestone 2"],
-//   "potentialCeiling": 94,
-//   "discipline": 88,
-//   "mentality": 92,
-//   "clutchFactor": 85,
-//   "badges": ["Ice Cold Finisher", "Tactical Monster", "Press Resistant"],
-//   "heatmap": {
-//     "dominantSide": "Left/Right/Central",
-//     "attackingPreference": "Half spaces / touchline / central",
-//     "zones": ["Zone 14", "Left Half-Space", "Right Wing"]
-//   },
-//   "predictedGrowth": 4
-// }
-
-// The tone must feel:
-// - elite
-// - cinematic
-// - high-performance
-// - academy-level
-// - brutally honest but motivating
-// `;
-
-//       const response = await ai.models.generateContent({
-//         model: "gemini-2.5-flash",
-//         contents: [
-//           {
-//             role: "user",
-//             parts: [
-//               {
-//                 fileData: {
-//                   fileUri: uploadResult.uri || uploadResult.name,
-//                   mimeType: file.mimetype
-//                 }
-//               },
-//               {
-//                 text: "Analyze this football player's performance according to the system instructions and return a JSON object."
-//               }
-//             ]
-//           }
-//         ],
-//         config: {
-//           systemInstruction: systemPrompt,
-//           responseMimeType: "application/json"
-//         }
-//       });
-
-//       console.log("Analysis complete. Cleaning up file...");
-
-//       // Clean up from local
-//       fs.unlink(file.path, (err) => {
-//         if (err) console.error("Error removing local temp file:", err);
-//       });
-//       // Clean up from Gemini
-//       try {
-//         await ai.files.delete({ name: uploadResult.name });
-//       } catch (err) {
-//         console.error("Failed to delete from Gemini server", err);
-//       }
-
-//       res.json({ report: response.text });
-
-//     } catch (error: any) {
-//       console.error("Error analyzing video:", error);
-//       res.status(500).json({ error: error.message || "An error occurred during analysis." });
-//     }
-//   });
-
-//   // Vite middleware for development
-//   if (process.env.NODE_ENV !== "production") {
-//     const vite = await createViteServer({
-//       server: { middlewareMode: true },
-//       appType: "spa",
-//     });
-//     app.use(vite.middlewares);
-//   } else {
-//     const distPath = path.join(process.cwd(), 'dist');
-//     app.use(express.static(distPath));
-//     app.get('*', (req, res) => {
-//       res.sendFile(path.join(distPath, 'index.html'));
-//     });
-//   }
-
-//   app.listen(PORT, "0.0.0.0", () => {
-//     console.log(`Server running on http://localhost:${PORT}`);
-//   });
-// }
-
-// startServer();
-
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -292,131 +91,162 @@ async function startServer() {
         throw new Error("Video processing failed in Gemini");
       }
 
-//       const systemPrompt = `You are an elite world-class AI football performance analyst and tactical coach.
-// Your job is to analyze football player videos with extreme depth, realism, and professional coaching intelligence.
-// You do NOT give generic motivational advice.
-// You analyze the player like a real elite academy scout from clubs like Real Madrid, Barcelona, Manchester City, Bayern Munich, or PSG.
+      const systemPrompt = `You are a professional football coach and player development expert.
+Your job is to analyze football player videos and produce a structured, actionable progression report.
+Users are not analysts. They are players seeking identity, truth, and improvement.
+So the system must prioritize emotional clarity + actionable improvement over statistical depth.
 
-// You must output valid JSON matching the following structure exactly (no markdown formatting outside the JSON, just pure JSON):
-// {
-//   "overallRating": 88,
-//   "archetype": "The Deep-Lying Catalyst",
-//   "position": "CF/F9",
-//   "weakFoot": 4, 
-//   "confidence": 90,
-//   "aggression": 75,
-//   "flair": 85,
-//   "radar": {
-//     "dribbling": 85,
-//     "pace": 80,
-//     "agility": 82,
-//     "tacticalIQ": 92,
-//     "passing": 88,
-//     "finishing": 84,
-//     "composure": 86,
-//     "creativity": 90
-//   },
-//   "threatAnalysis": {
-//     "dangerous": ["Strengths/weapons"],
-//     "exploitable": ["Weaknesses/flaws"]
-//   },
-//   "comparison": {
-//     "player": "Karim Benzema",
-//     "reason": "Matches Benzema's drop-deep efficiency with De Jong's ability to drive through midfields.",
-//     "similarity": 85
-//   },
-//   "footballDNA": ["Fearless Dribbler", "Tactical Controller"],
-//   "evolutionRoadmap": [
-//     { "day": "Day 1-10", "focus": "Reaction Speed", "drill": "High-intensity rondos..." },
-//     { "day": "Day 11-20", "focus": "Lateral Agility", "drill": "Isometric hip stabilizers..." },
-//     { "day": "Day 21-30", "focus": "The False-9 Pivot", "drill": "3-man bounce pass sequence..." }
-//   ],
-//   "scoutVerdict": "Cinematic summary...",
-//   "weakFootDevelopment": 45,
-//   "milestones": ["Milestone 1", "Milestone 2"],
-//   "potentialCeiling": 94,
-//   "discipline": 88,
-//   "mentality": 92,
-//   "clutchFactor": 85,
-//   "badges": ["Ice Cold Finisher", "Tactical Monster", "Press Resistant"],
-//   "heatmap": {
-//     "dominantSide": "Left/Right/Central",
-//     "attackingPreference": "Half spaces / touchline / central",
-//     "zones": ["Zone 14", "Left Half-Space", "Right Wing"]
-//   },
-//   "predictedGrowth": 4
-// }
-
-// The tone must feel:
-// - elite
-// - cinematic
-// - high-performance
-// - academy-level
-// - brutally honest but motivating
-// `;
-
-
-const systemPrompt = `You are a professional football technical scout and performance analyst (Hudl / Wyscout level).
-Your job is to analyze football player videos and produce a structured, data-driven football modeling dossier.
-Stop generating "cinematic fantasy language" and instead simulate real-world scouting methodology used by professional analysts.
-Keep tone neutral, precise, technical, and strictly observational. No superhero language or hyped analogies.
+Output MUST follow 3 layers: Identity, Reality, Growth.
+No fantasy archetypes like "Ice Cold Killer". No cinematic storytelling. No over-complex stats.
+Must feel like a professional coach + player development app.
 
 You must output valid JSON matching the following structure exactly (no markdown formatting outside the JSON, just pure JSON).
-If exact values cannot be computed from video, estimate conservatively and label as "observed tendency" via the numbers (0-100).
+If exact values cannot be computed from video, estimate conservatively.
 
 {
-  "overallRating": 88,
-  "roleProfile": "Inverted Winger",
-  "position": "RW/LW",
-  "tacticalFunction": {
-    "pressing": "High-intensity trigger",
-    "buildup": "Wide outlet, progressive carrier",
-    "transition": "Direct threat in attacking transition"
+  "overallRating": 78,
+  "identity": {
+    "archetype": "Progressive Playmaker",
+    "role": "Central Midfielder",
+    "summary": "A composed distributor who dictates the tempo and breaks lines with precision.",
+    "comparisonPlayer": "Martin Ødegaard",
+    "comparisonReason": "Shares the tendency to drop into half-spaces to orchestrate build-up play."
   },
-  "riskProfile": "Medium Tactical Risk",
-  "radar": {
-    "progressiveCarries": 85,
-    "takeOnSuccess": 80,
-    "finalThirdEntries": 82,
-    "keyPassFreq": 92,
-    "pressingSuccess": 88,
-    "defensiveRecoveries": 84,
-    "duelSuccess": 86,
-    "retention": 90
+  "reality": {
+    "attributes": {
+      "technical": 82,
+      "tactical": 75,
+      "physical": 68,
+      "mental": 80,
+      "creativity": 85,
+      "defensive": 60,
+      "attacking": 77,
+      "consistency": 70
+    },
+    "strengths": [
+      "Excellent vision and execution of line-breaking passes under pressure",
+      "Consistent scanned awareness before receiving the ball"
+    ],
+    "weaknesses": [
+      "Lacks physical presence in 50/50 ground duels",
+      "Tendency to hold the ball too long when direct counter-attacking options are available"
+    ],
+    "tacticalIntelligence": "Understands spatial dynamics well, frequently finding pockets between midfield and defensive lines.",
+    "decisionMaking": "Strong distribution choices under low pressure, but occasionally rushes final-third actions when closed down quickly."
   },
-  "observations": [
-    "Receives ball on half-turn under pressure in central zones",
-    "Frequently attempts 1v1 isolation on right flank",
-    "Requires improvement in defensive transition recognition",
-    "Demonstrates elite spatial awareness in Phase 2 buildup",
-    "Displays consistent ball retention under physical pressure"
-  ],
-  "tacticalFit": {
-    "bestFormations": ["4-3-3", "3-2-4-1"],
-    "bestRole": "Wide width holder with license to invert",
-    "weakEnvironments": ["Low-block counter-attacking heavy systems"]
-  },
-  "developmentModel": {
-    "skillGap": "Decision making in defensive transition",
-    "priorityBlocks": [
+  "growth": {
+    "priorities": [
       {
-        "timeframe": "Short Term (1-3 months)",
-        "focus": "Defensive positioning off-ball",
-        "action": "Video analysis of pressing triggers"
+        "focus": "Physical Duel Retention",
+        "drill": "Back-to-goal shielding drills with active resistance",
+        "matchScenario": "Holding off trailing defenders when receiving progressive passes",
+        "timeframe": "4-6 Weeks"
+      }
+    ],
+    "nextLevelUnlock": "Mastering physical shielding and quicker ball circulation will elevate overall match control, advancing the player from a situational playmaker to a reliable central pivot."
+  },
+  "key_moments": [
+    {
+      "timestamp": "00:15",
+      "problem": "Defender read your movement due to telegraphed pass",
+      "solution": "Attack outside space first to shift defender weight",
+      "training": "1v1 attacking transitions focusing on feints",
+      "elite_reference": "Watch how Bernardo Silva solves this by freezing the defender with a subtle pause"
+    }
+  ],
+  "development_plan": [
+    {
+      "phase": "Month 1",
+      "focus": "Decision making under pressure",
+      "drills": ["Rondos", "Small-sided games with immediate numerical disadvantage"]
+    }
+  ],
+  "coach_message": "Your dribbling score is solid, but your final decision after beating defenders needs work. Let's focus on unlocking your full potential.",
+  "matchReplay": {
+    "moments": [
+      {
+        "timestamp_start": "00:07",
+        "timestamp_end": "00:10",
+        "type": "decision",
+        "situation": "1v1 attacking scenario",
+        "user_action": "Inside cut attempted",
+        "problem": "Defender predicted movement",
+        "better_decision": "Exploit outside lane with acceleration",
+        "elite_reference": "Bernardo Silva",
+        "coaching_overlay": [
+          "Scan before receiving",
+          "Delay defender commitment",
+          "Change rhythm before direction"
+        ],
+        "severity": 72
       }
     ]
   },
-  "comparison": {
-    "player": "Bernardo Silva",
-    "reason": "Matches Silva's retention rate and pressing intensity, though less prominent in central buildup.",
-    "similarity": 85
+  "coach_memory_summary": {
+    "player_progress_analysis": "You have shown a +6% improvement in your dribbling execution since last match, but decision-making has regressed slightly under pressure.",
+    "repeating_mistakes": [
+      "Attacking the inside channel when the outside is open"
+    ],
+    "improvement_areas": [
+      "Dribbling success rate in final third"
+    ],
+    "next_priority_focus": "Decision making under pressure",
+    "confidence_trend": "improving"
   },
-  "heatmap": {
-    "dominantSide": "Right Flank",
-    "attackingPreference": "Half-spaces / touchline",
-    "zones": ["Zone 14", "Right Half-Space"]
+  "academy_plan": {
+    "weekly_focus": "Decision Making Under Pressure",
+    "modules": [
+      {
+        "title": "Scanning Before Receiving",
+        "type": "awareness",
+        "duration": "10 min",
+        "goal": "Improve first touch awareness",
+        "drill": "Wall pass + shoulder scan every 2 seconds before reception",
+        "game_application": "Improves midfield control under pressure and pre-plans next action",
+        "difficulty": 3
+      },
+      {
+        "title": "Half-Turn Reception",
+        "type": "technical",
+        "duration": "15 min",
+        "goal": "Receive the ball ready to play forward",
+        "drill": "Receive firm passes from a wall or partner on the back foot, open body to the field",
+        "game_application": "Evade incoming pressure from behind and quickly transition to attack",
+        "difficulty": 4
+      }
+    ],
+    "match_transfer_tasks": [
+      "Attempt 5 physical shoulder scans before every reception",
+      "Avoid first-touch directional mistakes in central midfield"
+    ],
+    "progress_conditions": [
+      "Complete 3 sessions before next match analysis",
+      "Show 15% reduction in pressured turnovers"
+    ]
   },
-  "scoutVerdict": "A technically secure wide player with consistent value in possession phases, but requiring structural protection defensively."
+  "community_layer": {
+    "global_rank": 1240,
+    "tier": "Semi-Pro Contender",
+    "improvement_rank": "Top 18% this week",
+    "challenge_score": 82
+  },
+  "comparison_engine": {
+    "matched_players": [
+      {
+        "name": "Alex R. (Semi-Pro)",
+        "ovr": 81,
+        "gap_analysis": {
+          "strength_gap": ["Decision speed under pressure (+12% ahead)"],
+          "advantage": ["Close ground control (+5% better)"]
+        }
+      }
+    ]
+  },
+  "share_assets": {
+    "highlight_card": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=600&auto=format&fit=crop",
+    "mistake_clip": "https://images.unsplash.com/photo-1543351611-58f69d7c1781?q=80&w=600&auto=format&fit=crop",
+    "progress_badge": "https://images.unsplash.com/photo-1526232549926-21ceef1c7dd9?q=80&w=600&auto=format&fit=crop"
+  }
 }
 `;
 
