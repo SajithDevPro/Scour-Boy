@@ -1292,12 +1292,12 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
               <polygon points="8,1 10.5,5.8 16,6.6 12,10.4 13,16 8,13.3 3,16 4,10.4 0,6.6 5.5,5.8" fill="#000" />
             </svg> */}
           </div>
-          <span style={{ fontSize: 13, fontWeight: 800, letterSpacing: '-0.02em', color: 'rgba(255,255,255,0.4)' }}>
-            ELITE<span style={{ color: '#F5A623' }}> SCOUR</span>
+          <span style={{ fontSize: 13, fontWeight: 800, letterSpacing: '-0.02em', color: 'rgb(255, 255, 255)' }}>
+            ELITE<span style={{ color: '#F5A623' }}> SCOUT</span>
           </span>
         </div>
         <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.22)', margin: 0 }}>
-          © 2026 EliteScour · All rights reserved.
+          © 2026 EliteScout · All rights reserved.
         </p>
         <div style={{ display: 'flex', gap: 22 }}>
           {['Privacy', 'Terms', 'Contact'].map((l) => (

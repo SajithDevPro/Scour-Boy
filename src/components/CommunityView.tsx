@@ -39,7 +39,7 @@ export function CommunityView({ report, session, onUpgrade }: CommunityViewProps
   const shareAssets = report?.share_assets || {
     highlight_card: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=400&h=600&fit=crop",
     mistake_clip: "https://images.unsplash.com/photo-1543351611-58f69d7c1781?q=80&w=400&h=600&fit=crop",
-    progress_badge: "https://images.unsplash.com/photo-1526232549926-21ceef1c7dd9?q=80&w=400&h=600&fit=crop"
+    progress_badge: "https://images.unsplash.com/photo-1526232761682-d26e03ac148e?q=80&w=400&h=600&fit=crop"
   };
 
   const leaderboard = [
