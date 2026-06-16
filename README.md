@@ -56,7 +56,7 @@ The main **Football AI Analysis Engine** processes video data and creates profes
 - Modern UI Components
 
 **AI**
-- Gemini AI API
+- Gemini AI 
 - AI Video Analysis Engine
 
 **Tools**
