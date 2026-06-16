@@ -1,22 +1,74 @@
-<<<<<<< HEAD
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# ⚽ ELITE SCOUT AI
 
-# Run and deploy your AI Studio app
+<p align="center">
+<img src="https://s3.us-east-2.amazonaws.com/codyburleson.com/images/2018/07/TypeScriptBanner.png" width="100%">
+</p>
 
-This contains everything you need to run your app locally.
+<h3 align="center">
+AI-Powered Football Video Analysis Engine
+</h3>
 
-## Run Locally
+<p align="center">
+Transform football videos into intelligent scouting insights using Artificial Intelligence.
+</p>
 
-**Prerequisites:**  Node.js
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
-=======
-# elite-scout-ai
-football Ai
+## 🚀 About The Project
 
+**ELITE SCOUT AI** is an AI-powered football analysis platform built with **TypeScript**.
+
+The system analyzes football footage and generates detailed insights about:
+
+- ⚽ Player performance
+- 🧠 Tactical decisions
+- 🏃 Movement patterns
+- 🎯 Positioning
+- 📊 Match intelligence
+
+
+## 🔥 Core Engine
+
+The main **Football AI Analysis Engine** processes video data and creates professional-style football reports.
+
+### Analysis Includes:
+
+✅ Player evaluation  
+✅ Tactical breakdown  
+✅ Strength & weakness analysis  
+✅ Gameplay observations  
+✅ AI-generated recommendations  
+
+
+## ✨ Features
+
+- 🎥 AI football video understanding
+- 📈 Automated scouting reports
+- 🧠 Intelligent match analysis
+- ⚡ Modern responsive interface
+- 📊 Data-driven football insights
+
+
+## 🛠️ Tech Stack
+
+**Frontend**
+- TypeScript
+- React
+- Modern UI Components
+
+**AI**
+- Gemini AI API
+- AI Video Analysis Engine
+
+**Tools**
+- Node.js
+- npm
+- GitHub
+
+
+
+## ⚙️ Run Locally
+
+Install dependencies:
+
+```bash
+npm install
