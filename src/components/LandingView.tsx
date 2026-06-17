@@ -1,12 +1,26 @@
-// ginPath(); ctx.moveTo(px, py + ph / 2); ctx.lineTo(px + pw, py + ph / 2); ctx.stroke();
-
-
 import React, { useEffect, useRef, useCallback } from 'react';
 import { ArrowRight, TrendingUp, Cpu, Shield } from 'lucide-react';
+
 
 interface LandingViewProps {
   onGetStarted: () => void;
   onViewPricing: () => void;
+  setView: (
+    view:
+      | 'landing'
+      | 'home'
+      | 'upload'
+      | 'report'
+      | 'pricing'
+      | 'evolution'
+      | 'lab'
+      | 'academy'
+      | 'community'
+      | 'auth'
+      | 'verified'
+      | 'privacy'
+      | 'terms'
+  ) => void;
 }
 
 /* ─────────────────────────────────────────────
@@ -188,7 +202,7 @@ function RightCanvas() {
       const zones = [
         { nx: 0.25, ny: 0.5, sz: 0.09, c: 'rgba(245,166,35,' },
         { nx: 0.75, ny: 0.5, sz: 0.07, c: 'rgba(52,211,153,' },
-        { nx: 0.5,  ny: 0.5, sz: 0.06, c: 'rgba(245,166,35,' },
+        { nx: 0.5, ny: 0.5, sz: 0.06, c: 'rgba(245,166,35,' },
       ];
       zones.forEach(({ nx, ny, sz, c }, zi) => {
         const baseR = Math.min(w, h) * sz;
@@ -463,7 +477,7 @@ function RightCanvas() {
 /* ─────────────────────────────────────────────
    MAIN COMPONENT
 ───────────────────────────────────────────── */
-export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
+export function LandingView({ onGetStarted, onViewPricing, setView }: LandingViewProps) {
   return (
     <div
       style={{
@@ -586,7 +600,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
         </div>
       </nav> */}
 
-      
+
       <section
         style={{
           textAlign: 'center',
@@ -594,7 +608,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
           position: 'relative',
         }}
       >
-        
+
         <div
           className="hero-anim hero-anim-d1"
           style={{
@@ -630,7 +644,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
           </span>
         </div>
 
-        
+
         <h1
           className="hero-anim hero-anim-d2"
           style={{
@@ -656,7 +670,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
           </span>
         </h1>
 
-        
+
         <p
           className="hero-anim hero-anim-d3"
           style={{
@@ -671,7 +685,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
           and a live performance rating that proves you're improving.
         </p>
 
-        
+
         <div
           className="hero-anim hero-anim-d4"
           style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}
@@ -742,7 +756,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
           }}
         >
           <div style={{ position: 'relative' }}>
-            
+
             <div
               style={{
                 position: 'absolute',
@@ -754,7 +768,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
                 zIndex: 2,
               }}
             />
-            
+
             {[
               { top: -1, left: -1, borderTop: '2px solid #F5A623', borderLeft: '2px solid #F5A623', borderRadius: '16px 0 0 0' },
               { top: -1, right: -1, borderTop: '2px solid #F5A623', borderRight: '2px solid #F5A623', borderRadius: '0 16px 0 0' },
@@ -773,7 +787,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
               />
             ))}
 
-            
+
             <div
               style={{
                 position: 'absolute',
@@ -785,7 +799,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
               }}
             />
 
-            
+
             <div
               style={{
                 position: 'relative',
@@ -812,7 +826,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
                 }}
               />
 
-              
+
               <div
                 style={{
                   position: 'absolute',
@@ -820,7 +834,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
                   pointerEvents: 'none',
                 }}
               >
-               
+
                 <div
                   style={{
                     position: 'absolute',
@@ -868,7 +882,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
                   </span>
                 </div>
 
-                
+
                 <div
                   style={{
                     position: 'absolute',
@@ -881,7 +895,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
                   }}
                 />
 
-                
+
                 <div
                   style={{
                     position: 'absolute',
@@ -914,7 +928,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
                   <div style={{ fontSize: 11, fontWeight: 700, color: '#fff' }}>94%</div>
                 </div>
 
-               
+
                 <div
                   style={{
                     position: 'absolute',
@@ -943,7 +957,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
                       </div>
                     ))}
                   </div>
-                  
+
                   <div style={{ height: 2, background: 'rgba(255,255,255,0.08)', borderRadius: 1 }}>
                     <div
                       style={{
@@ -956,7 +970,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
                   </div>
                 </div>
 
-                
+
                 {[
                   { top: 7, left: 7, borderTop: '1.5px solid rgba(245,166,35,0.5)', borderLeft: '1.5px solid rgba(245,166,35,0.5)' },
                   { top: 7, right: 7, borderTop: '1.5px solid rgba(245,166,35,0.5)', borderRight: '1.5px solid rgba(245,166,35,0.5)' },
@@ -978,7 +992,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
           </div>
         </div>
 
-        
+
         <div
           style={{
             flex: 1,
@@ -992,7 +1006,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
         >
           <RightCanvas />
 
-          
+
           <div
             style={{
               position: 'absolute',
@@ -1025,7 +1039,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
             </div>
           </div>
 
-          
+
           <div
             style={{
               position: 'absolute',
@@ -1047,9 +1061,9 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
             ))}
           </div>
         </div>
-      </section>  
+      </section>
 
-  
+
       <section
         style={{
           borderTop: '1px solid rgba(255,255,255,0.055)',
@@ -1175,7 +1189,7 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
             ))}
           </div>
         </div>
-      </section> 
+      </section>
 
       {/* ── TESTIMONIALS ── */}
       <section
@@ -1278,28 +1292,29 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div
-            // style={{
-            //   width: 22,
-            //   height: 22,
-            //   background: '#F5A623',
-            //   borderRadius: 5,
-            //   display: 'flex',
-            //   alignItems: 'center',
-            //   justifyContent: 'center',
-            // }}
+          // style={{
+          //   width: 22,
+          //   height: 22,
+          //   background: '#F5A623',
+          //   borderRadius: 5,
+          //   display: 'flex',
+          //   alignItems: 'center',
+          //   justifyContent: 'center',
+          // }}
           >
             {/* <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
               <polygon points="8,1 10.5,5.8 16,6.6 12,10.4 13,16 8,13.3 3,16 4,10.4 0,6.6 5.5,5.8" fill="#000" />
             </svg> */}
           </div>
           <span style={{ fontSize: 13, fontWeight: 800, letterSpacing: '-0.02em', color: 'rgb(255, 255, 255)' }}>
-            ELITE<span style={{ color: '#F5A623' }}> SCOUT</span>
+            SCOUR<span style={{ color: '#F5A623' }}> BOY</span>
           </span>
         </div>
         <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.22)', margin: 0 }}>
-          © 2026 EliteScout · All rights reserved.
+          © 2026 ScourBoy · All rights reserved.
         </p>
-        <div style={{ display: 'flex', gap: 22 }}>
+
+        {/* <div style={{ display: 'flex', gap: 22 }}>
           {['Privacy', 'Terms', 'Contact'].map((l) => (
             <a
               key={l}
@@ -1309,7 +1324,36 @@ export function LandingView({ onGetStarted, onViewPricing }: LandingViewProps) {
               {l}
             </a>
           ))}
+        </div> */}
+
+
+        <div style={{ display: 'flex', gap: 22 }}>
+          <a
+            onClick={() => setView('privacy')}
+            style={{
+              fontSize: 12,
+              color: 'rgba(255,255,255,0.28)',
+              textDecoration: 'none',
+              cursor: 'pointer'
+            }}
+          >
+            Privacy
+          </a>
+
+          <a
+            onClick={() => setView('terms')}
+            style={{
+              fontSize: 12,
+              color: 'rgba(255,255,255,0.28)',
+              textDecoration: 'none',
+              cursor: 'pointer'
+            }}
+          >
+            Terms
+          </a>
         </div>
+
+
       </footer>
     </div>
   );
