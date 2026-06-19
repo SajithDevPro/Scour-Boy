@@ -55,8 +55,12 @@ The main **Football AI Analysis Engine** processes video data and creates profes
 - React
 - Modern UI Components
 
+  
+**Backend**
+- Express 
+
 **AI**
-- Gemini AI 
+- Gemini Engine 
 - AI Video Analysis Engine
 
 **Tools**
