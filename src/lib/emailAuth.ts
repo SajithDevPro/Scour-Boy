@@ -33,7 +33,12 @@ export async function signup(
 
 
   // send verification email
-  await sendEmailVerification(user);
+  // await sendEmailVerification(user);
+
+  await sendEmailVerification(user, {
+  url: window.location.origin + "/auth/verified",
+  handleCodeInApp: false
+  });
 
 
   console.log("VERIFICATION EMAIL SENT");

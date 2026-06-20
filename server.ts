@@ -151,7 +151,7 @@ If exact values cannot be computed from video, estimate conservatively.
       "problem": "Defender read your movement due to telegraphed pass",
       "solution": "Attack outside space first to shift defender weight",
       "training": "1v1 attacking transitions focusing on feints",
-      "elite_reference": "Watch how Bernardo Silva solves this by freezing the defender with a subtle pause"
+      "elite_reference": "watch how Bernardo Silva solves this by freezing the defender with a subtle pause"
     }
   ],
   "development_plan": [
